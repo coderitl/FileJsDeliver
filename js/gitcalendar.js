@@ -1,4 +1,4 @@
-const calendar = new Vue({
+var calendar = new Vue({
   el: '#calendar',
   data: {
     simplemode: true, //打开时使用canvas绘制gitcalendar，关闭时使用svg绘制gitcalendar
@@ -56,12 +56,12 @@ const calendar = new Vue({
     },
     thiscolor(x) {
       if (x === 0) {
-        let i = parseInt(x / 2);
+        var i = parseInt(x / 2);
         return this.color[0]
       } else if (x < 2) {
         return this.color[1]
       } else if (x < 20) {
-        let i = parseInt(x / 2);
+        var i = parseInt(x / 2);
         return this.color[i]
       } else {
         return this.color[9]
@@ -69,7 +69,7 @@ const calendar = new Vue({
     },
   }
 });
-let githubapiurl = "https://githubapi.ryanchristian.dev/user/" + calendar.user;
+var githubapiurl = "https://githubapi.ryanchristian.dev/user/" + calendar.user;
 $(function () {
   $.ajax({
     type: "GET",
@@ -94,21 +94,21 @@ $(function () {
       addlastmonth();
 
       function responsiveChart() {
-        let c = document.getElementById("gitcanvas");
-        let cmessage = document.getElementById("gitmessage");
-        let ctx = c.getContext("2d");
+        var c = document.getElementById("gitcanvas");
+        var cmessage = document.getElementById("gitmessage");
+        var ctx = c.getContext("2d");
         c.width = document.getElementById("calendarcanvasbox").offsetWidth;
-        let linemaxwitdh = 0.96 * c.width / calendar.data.length;
+        var linemaxwitdh = 0.96 * c.width / calendar.data.length;
         c.height = 9 * linemaxwitdh;
-        let lineminwitdh = 0.8 * linemaxwitdh;
-        let setposition = {
+        var lineminwitdh = 0.8 * linemaxwitdh;
+        var setposition = {
           x: 0.02 * c.width,
           y: 0.025 * c.width
         };
-        for (let week in calendar.data) {
+        for (var week in calendar.data) {
           weekdata = calendar.data[week];
-          for (let day in weekdata) {
-            let dataitem = {date: "", count: "", x: 0, y: 0};
+          for (var day in weekdata) {
+            var dataitem = {date: "", count: "", x: 0, y: 0};
             calendar.positionplusdata.push(dataitem);
             ctx.fillStyle = calendar.thiscolor(weekdata[day].count);
             setposition.y = Math.round(setposition.y * 100) / 100;
@@ -130,8 +130,8 @@ $(function () {
         ctx.fillText("二", 0, 3.9 * linemaxwitdh);
         ctx.fillText("四", 0, 5.9 * linemaxwitdh);
         ctx.fillText("六", 0, 7.9 * linemaxwitdh);
-        let monthindexlist = c.width / 24;
-        for (let index in calendar.monthchange) {
+        var monthindexlist = c.width / 24;
+        for (var index in calendar.monthchange) {
           ctx.fillText(calendar.monthchange[index], monthindexlist, 0.7 * linemaxwitdh);
           monthindexlist = monthindexlist + c.width / 12
         }
@@ -149,9 +149,9 @@ $(function () {
           var x = event.clientX - rect.left * (canvas.width / rect.width);
           var y = event.clientY - rect.top * (canvas.height / rect.height);
           //console.log("x:"+x+",y:"+y);
-          for (let item of calendar.positionplusdata) {
-            let lenthx = x - item.x;
-            let lenthy = y - item.y;
+          for (var item of calendar.positionplusdata) {
+            var lenthx = x - item.x;
+            var lenthy = y - item.y;
             //console.log(lenthx,lenthy);
             if (0 < lenthx && lenthx < lineminwitdh) {
               if (0 < lenthy && lenthy < lineminwitdh) {
@@ -197,25 +197,25 @@ $(function () {
       };
 
       function thisweek2core() {
-        for (let i = calendar.thisdayindex - 1; i < calendar.first2date.length; i++) {
+        for (var i = calendar.thisdayindex - 1; i < calendar.first2date.length; i++) {
           calendar.thisweekdatacore += calendar.first2date[i].count
         }
       };
 
       function thisweekcore(index) {
-        for (let item of calendar.data[index]) {
+        for (var item of calendar.data[index]) {
           calendar.thisweekdatacore += item.count
         }
       };
 
       function addlastweek() {
-        for (let item of calendar.lastweek) {
+        for (var item of calendar.lastweek) {
           calendar.weekdatacore += item.count
         }
       };
 
       function addbeforeweek() {
-        for (let i = calendar.thisdayindex; i < calendar.beforeweek.length; i++) {
+        for (var i = calendar.thisdayindex; i < calendar.beforeweek.length; i++) {
           calendar.weekdatacore += calendar.beforeweek[i].count
         }
       };
